@@ -1,0 +1,122 @@
+apiVersion: v1
+kind: Policy
+spec:
+  name: "XXX奖"
+  description: "XXX奖描述"
+  level: "company"
+  scope: []
+  liaisons: []
+  periods: [3, 5, 7, 9]
+  global_config:
+    # 全局默认通知方式（无论是提醒、结果告知）
+    default_notify_methods: ["email", "wecom"]
+    # 默认结果告知接收角色
+    default_broadcast_receiver_groups: ["applicant"]
+    # 默认审批支持操作
+    default_approval_allow_operations: ["approve", "reject"]
+
+  stages:
+    - name: "准备环节"
+      steps:
+        - type: "approval"
+          auto_execute: true
+          name: "准备环节"
+          approver_groups: ["gm"]
+          allow_operations: [ "approve", "reject" ]
+          reminder:
+            content_tmpl:
+              default: "默认通知文本"
+          broadcast:
+            content_tmpl:
+              approve: "支持申报"
+              reject: "不支持申报"
+
+    - name: "初审"
+      steps:
+        - type: "approval"
+          auto_execute: true
+          name: "初审"
+          approver_groups: ["award_liaison"]
+          allow_operations: ["approve", "reject", "recommend"]
+          broadcast:
+            content_tmpl:
+              approve: "恭喜，你的奖项申报已经通过初审，并进入专业评审环节"
+              reject: "很遗憾，你的奖项申报没有通过初审，请再接再厉"
+              recommend: "经过评估，建议项目转申报 XXXXXXX"
+        - type: "approval"
+          auto_execute: true
+          name: "初审评委核验数据"
+          approver_groups: ["initial_reviewer"]
+          allow_operations: [ "approve", "reject" ]
+          reminder:
+            content_tmpl:
+              default: "请把关确认数据是否真实准确、是否符合提报要求"
+          broadcast:
+            content_tmpl:
+              approve: "恭喜，你申报的XXX奖已通过初审，进入专业评审环节"
+              reject: "很遗憾，你的奖项申报未能通过初审"
+
+    - name: "专业评审"
+      steps:
+        - type: "approval_time_collection"
+          name: "专业评委反馈复审时间"
+          target_groups: [ "professional_reviewer" ]
+          reminder:
+            content_tmpl:
+              default: "请各位评委反馈参加XXX奖评审时间"
+        - type: "approval"
+          name: "专业评委进行评审"
+          approver_groups: ["professional_reviewer"]
+          reminder:
+            content_tmpl:
+              default: "请各位专业评审确认是否支持该项目获奖"
+          broadcast:
+            content_tmpl:
+              approve: "恭喜，你申报的XXX奖已经通过专业评审，进入终审环节"
+              reject: "很遗憾，你申报的XXX奖没有通过专业评审"
+
+    - name: "终审"
+      steps:
+        - type: "approval"
+          name: "委员会终审"
+          approver_groups: ["final_reviewer"]
+          decisive: true
+          reminder:
+            content_tmpl:
+              default: ""
+          broadcast:
+            content_tmpl:
+              approve: "经委员会审批，恭喜xxx项目获得 XXX奖"
+              reject: "很遗憾，你的项目没有获得 XXX奖理由"
+        - type: "notification"
+          name: "反馈评审结果给申报人"
+          receiver_groups: [ "applicant" ]
+          methods: [ "email", "wecom" ]
+          content_tmpl:
+            default: "各位好！你申报的XXX奖结果已出，请登录系统查看~"
+
+    - name: "发文/宣导/沉淀"
+      steps:
+        - type: "notification"
+          name: "通知奖项申请人填写获奖宣导材料"
+          content_tmpl:
+            default: ""
+          receiver_groups: ["applicant"]
+        - type: "summary_collection"
+          name: "申请人填写获奖宣导材料"
+          target_groups: [ "applicant" ]
+          reminder:
+            content_tmpl:
+                default: "请奖项申请人填写获奖宣导材料"
+        - type: "approval"
+          auto_execute: true
+          name: "奖项管理员审批"
+          approver_groups: [ "admin" ]
+          reminder:
+            content_tmpl:
+              default: "请管理员审批奖项获奖宣导材料申请"
+          broadcast:
+            content_tmpl:
+              approve: "审批通过"
+              reject: "审批驳回"
+              edit: "编辑"

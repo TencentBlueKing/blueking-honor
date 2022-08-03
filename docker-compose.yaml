@@ -1,0 +1,25 @@
+services:
+    mysql:
+        image: mysql/mysql-server:8.0.28-1.2.7-server
+        volumes:
+            - ${STORAGE_ROOT}/mysql:/var/lib/mysql/
+        environment:
+            MYSQL_DATABASE: bk_honor
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_ROOT_HOST: '%'
+        command: [
+            "mysqld",
+            "--character-set-server=utf8mb4",
+            "--collation-server=utf8mb4_unicode_ci"
+            ]
+        ports:
+            - "3306"
+    web:
+        links:
+            - "mysql"
+        image: ${REPO}/bk-honor:${TAG}
+        ports:
+            - "${PORT}:8000"
+
+        # 读取环境变量需要将 src/api/bk_honor/settings/env.example 修改成 src/api/bk_honor/settings/.env
+        env_file: "src/api/bk_honor/settings/.env"

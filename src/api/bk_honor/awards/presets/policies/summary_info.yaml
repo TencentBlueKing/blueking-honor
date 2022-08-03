@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: SummaryInfo
+spec:
+  # TODO: 奖项沉淀页面表单json格式参照
+  - key: "title"
+    label: "标题"
+    type: "bk-input"
+    default: ""
+    required: true
+    placeholder: "标题"
+    rules:
+      - max: 100
+        message: "不超过100个字"
+        trigger: "blur"
+  - key: "introduction"
+    label: "介绍"
+    type: "bk-input"
+    componentType: "textarea"
+    default: ""
+    required: true
+    placeholder: "2000字以内"
+  - key: "team_members"
+    label: "团队成员列表"
+    type: "bk-tag-input"
+    allow-create: true
+    placeholder: ""
+    default: [ ]
+    required: true
+  - key: "upload"
+    label: "附件"
+    type: "award-upload"
+    default: ""
+    required: true

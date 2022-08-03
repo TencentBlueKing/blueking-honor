@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: LevelSet
+spec:
+  # TODO：根据具体奖项设置级别
+  - key: "company"
+    name: "公司级"
+    sort: 1
+  - key: "department"
+    name: "部门级"
+    sort: 2

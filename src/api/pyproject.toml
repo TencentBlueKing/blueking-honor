@@ -1,0 +1,92 @@
+[tool.poetry]
+name = "bk-honor"
+version = "0.1.0"
+description = ""
+authors = ["TencentBlueking"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "~3.9"
+Django = "<4"
+djangorestframework = "^3.13.1"
+drf-yasg = "^1.20.0"
+gunicorn = "^20.1.0"
+blue-krill = "^1.0.13"
+PyYAML = "5.3.1"
+PyMySQL = "^1.0.2"
+dacite = "^1.6.0"
+whitenoise = "^6.0.0"
+django-cors-headers = "^3.11.0"
+bkstorages = "^1.0.8"
+xlwt = "^1.3.0"
+sentry-sdk = "^1.5.12"
+intervaltree = "^3.1.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+isort = "^5.10.1"
+pytest = "^7.1.0"
+pyproject-flake8 = "^0.0.1-alpha.2"
+mypy = "0.941"
+django-stubs = "^1.9.0"
+pytest-django = "^4.5.2"
+types-setuptools = "^57.4.11"
+djangorestframework-stubs = "^1.4.0"
+pygraphviz = "^1.9"
+django-extensions = "^3.1.5"
+types-requests = "^2.27.19"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+skip-string-normalization = 'true'
+exclude = '''
+/(
+  | .+/node_modules
+)/
+'''
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = 'true'
+force_grid_wrap = 0
+use_parentheses = 'true'
+line_length = 119
+skip_glob = ["*/node_modules/**"]
+
+[tool.flake8]
+ignore = "C901,E203,W503,F405"
+max-line-length = 119
+max-complexity = 8
+format = "pylint"
+exclude = "*migrations*,*.pyc,.git,__pycache__"
+
+[tool.mypy]
+ignore_missing_imports = true
+show_error_codes = true
+plugins = ["mypy_django_plugin.main"]
+
+strict_optional = true
+
+[[tool.mypy.overrides]]
+module = [
+    "*.migrations.*",
+    "*.settings.*",
+]
+ignore_errors = true
+
+[tool.django-stubs]
+django_settings_module = "bk_honor.settings.overlays.dev"
+
+[tool.pytest.ini_options]
+addopts = "-p no:warnings"
+testpaths = ["bk_honor/tests"]
+DJANGO_SETTINGS_MODULE = "bk_honor.settings.overlays.dev"
+
+[[tool.poetry.source]]
+name = "tencent"
+url = "http://mirrors.tencent.com/pypi/simple/"
+default = true

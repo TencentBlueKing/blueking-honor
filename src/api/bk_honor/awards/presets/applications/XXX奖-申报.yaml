@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: RawAppInfo
+spec:
+  bindPolicy: "XXX奖"
+  fields:
+    - key: "name"
+      label: "名称"
+      type: "bk-input"
+      default: ""
+      required: true
+      placeholder: "名称"
+      rules:
+        - max: 100
+          message: "不超过100个字"
+          trigger: "blur"
+    - key: "member_selector"
+      label: "人员选择器"
+      type: "bk-tag-input"
+      allow-create: true
+      placeholder: ""
+      default: []
+      required: true
+    - key: "description"
+      label: "事迹描述"
+      type: "bk-input"
+      default: ""
+      required: true
+      placeholder: "500字以内"
+      componentType: "textarea"
+      rules:
+        - max: 500
+          message: "不超过500个字"
+          trigger: "blur"
+    - key: "upload"
+      label: "附件"
+      type: "award-upload"
+      default: ""
+      required: true
+
+  user_groups:
+    # TODO: 初审环节审批人角色
+    - key: "gm"
+      label: "部门GM"
+      default: []
+      required: true
+      type: "bk-tag-input"
+      allow-create: true

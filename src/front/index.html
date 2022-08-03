@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="{{ BK_STATIC_URL }}/static/images/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ BK_STATIC_URL }}/static/images/favicon.png" type="image/x-icon" />
+    <meta charset="utf-8">
+    <title> 荣誉激励 </title>
+  </head>
+    <body>
+      <div id="app"></div>
+      <script>
+        window.PROJECT_CONFIG = (function () {
+          const SITE_URL = '{{ SITE_URL }}'
+          const BK_STATIC_URL = '{{ BK_STATIC_URL }}'
+          // 当前应用的环境，预发布环境为 stag，正式环境为 prod
+          const BKPAAS_ENVIRONMENT = '{{ BKPAAS_ENVIRONMENT }}'
+          // EngineApp名称，拼接规则：bkapp-{appcode}-{BKPAAS_ENVIRONMENT}
+          const BKPAAS_ENGINE_APP_NAME = '{{ BKPAAS_ENGINE_APP_NAME }}'
+          // 内部版对应ieod，外部版对应tencent，混合云版对应clouds
+          const BKPAAS_ENGINE_REGION = '{{ BKPAAS_ENGINE_REGION }}'
+          // APP ID
+          const BKPAAS_APP_ID = '{{ BKPAAS_APP_ID }}'
+          // 登录地址
+          const login_site = '{{ LOGIN_SITE }}'
+          // 头像地址
+          const avatar_site = '{{ AVATAR_SITE }}'
+
+          return {
+            BK_STATIC_URL: BK_STATIC_URL,
+            SITE_URL: SITE_URL,
+            BKPAAS_ENVIRONMENT: BKPAAS_ENVIRONMENT,
+            BKPAAS_ENGINE_APP_NAME: BKPAAS_ENGINE_APP_NAME,
+            BKPAAS_ENGINE_REGION: BKPAAS_ENGINE_REGION,
+            BKPAAS_APP_ID: BKPAAS_APP_ID,
+            login_site: login_site,
+            avatar_site: avatar_site
+          }
+        })()
+      </script>
+    </body>
+</html>

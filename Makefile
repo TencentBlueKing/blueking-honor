@@ -1,5 +1,5 @@
 #!make
-repo ?= "mirrors.tencent.com/bk-om"
+repo ?= "mirrors.tencent.com/bk-honor"
 version ?= "open-source"
 platform ?= "linux/amd64,linux/arm64"
 listen_port ?= "8009"

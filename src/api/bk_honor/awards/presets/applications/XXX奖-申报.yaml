@@ -14,7 +14,7 @@ spec:
           message: "不超过100个字"
           trigger: "blur"
     - key: "member_selector"
-      label: "人员选择器"
+      label: "人员选择"
       type: "bk-tag-input"
       allow-create: true
       placeholder: ""

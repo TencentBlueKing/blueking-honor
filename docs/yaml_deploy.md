@@ -1,6 +1,6 @@
 
 ## 奖项yaml 配置格式
-###奖项申报表单 json
+### 奖项申报表单 json
 ```yaml
 apiVersion: v1
 kind: RawAppInfo          # 类型判断
@@ -51,7 +51,7 @@ spec:
       allow-create: true
 ```
 
-###奖项沉淀表单 json
+### 奖项沉淀表单 json
 ```yaml
 apiVersion: v1
 kind: SummaryInfo    # 奖项沉淀表单信息
@@ -88,7 +88,7 @@ spec:
     required: true
 ```
 
-###奖项级别
+### 奖项级别
 ```yaml
 apiVersion: v1
 kind: LevelSet
